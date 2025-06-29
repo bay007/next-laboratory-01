@@ -26,13 +26,13 @@ export default function App() {
         <div>
           Counter <div>{snap.count} </div>{" "}
           <button
-            className="my-1 border w-full transition-transform transform active:scale-98 hover:scale-95"
+            className="my-1 border w-full"
             onClick={() => (state.count += 1)}
           >
             +
           </button>
           <button
-            className="my-1 border w-full transition-transform transform active:scale-98 hover:scale-95"
+            className="my-1 border w-full"
             onClick={() => (state.count -= 1)}
           >
             -
