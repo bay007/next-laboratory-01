@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-
+@import "tailwindcss-animated";
 /* styles.css */
 input {
   @apply transition-transform transform focus:scale-99 duration-300;
@@ -11,11 +11,15 @@ textarea {
 }
 
 button {
-  @apply transition-transform transform active:scale-99 hover:scale-98 rounded-xs;
+  @apply transition-transform transform active:scale-99 hover:scale-98 rounded-xs cursor-pointer;
 }
 
 img {
-  @apply hover:scale-102 transition-transform transform rounded-xs;
+  @apply hover:scale-102 transition-transform transform rounded-xs cursor-pointer;
+}
+
+.add {
+  @apply animate-fade-up animate-ease-in-out animate-duration-75;
 }
 
 @custom-variant dark (&:is(.dark *));
