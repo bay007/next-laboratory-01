@@ -63,6 +63,7 @@ const mockFetchUserData = (): Promise<Inputs> => {
 
 export default function App() {
   const snap = useSnapshot(state);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isLoading, setIsLoading] = useState(true);
   const methods = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (data) => console.log({ data });
