@@ -2,10 +2,11 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useFieldArray, useFormContext } from "react-hook-form";
+import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 
 export default function Upload() {
   const { register, control } = useFormContext(); // retrieve all hook methods
+  const files = useWatch({ name: "files", control }) || [];
 
   const { fields, append, remove } = useFieldArray({
     name: "files",
@@ -25,6 +26,12 @@ export default function Upload() {
                 className="border border-gray-300 rounded p-2 cursor-pointer"
                 accept=".jpg, .jpeg, .png, .gif"
               />
+              {/* Aquí mostramos el nombre del archivo que esté en el estado */}
+              {files[index]?.file instanceof File && (
+                <span className="ml-2 text-gray-700">
+                  {files[index].file.name}
+                </span>
+              )}
               <Button type="button" onClick={() => remove(index)} className="">
                 X
               </Button>
