@@ -20,7 +20,6 @@ export function Options({ qIndex }: { qIndex: number }) {
       name: `questions.${qIndex}.options`,
     }
   );
-  console.log("Runtime 'fields' data:", fields);
 
   return (
     <>
