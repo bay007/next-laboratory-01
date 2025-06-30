@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { useSnapshot } from "valtio";
 import Upload from "./input/upload";
+import { Question } from "./question/question";
 import { state } from "./store";
 
 type ApiFile = {
@@ -66,7 +67,7 @@ export default function App() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isLoading, setIsLoading] = useState(true);
   const methods = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log({ data });
+  const onSubmit: SubmitHandler<Inputs> = (data) => alert(JSON.stringify(data, null, 2));
 
   useEffect(() => {
     const loadData = async () => {
@@ -135,6 +136,10 @@ export default function App() {
             )}
             <div className="my-2">
               <Upload />
+            </div>
+            <div className="my-1">
+              <div>Questions</div>
+              <Question></Question>
             </div>
             <Input className="cursor-pointer" type="submit" />
           </form>

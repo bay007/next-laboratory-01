@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 
 export default function Upload() {
-  const { register, control } = useFormContext(); // retrieve all hook methods
+  const { register, control } = useFormContext();
   const files = useWatch({ name: "files", control }) || [];
 
   const { fields, append, remove } = useFieldArray({
