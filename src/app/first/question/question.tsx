@@ -1,8 +1,9 @@
 import { useFieldArray, useFormContext } from "react-hook-form";
+import { Options } from "./option";
 
 export function Question() {
   const { control, register } = useFormContext();
-  
+
   const { fields, append, remove } = useFieldArray({
     control,
     name: "questions",
@@ -12,21 +13,26 @@ export function Question() {
     <>
       <p>Questions component:</p>
       <div>
-        {fields.map((field, index) => (
+        {fields.map((field, index: number) => (
           <div key={field.id} className="flex items-center mb mt-2 add">
-            <input
-              {...register(`questions.${index}.text`)}
-              type="text"
-              className="border border-gray-300 rounded p-2"
-              placeholder={`Questions ${index + 1}`}
-            />
-            <button
-              type="button"
-              onClick={() => remove(index)}
-              className="ml-2 bg-red-500 text-white rounded px-2 py-1"
-            >
-              Remove
-            </button>
+            <div>
+              <input
+                {...register(`questions.${index}.text`)}
+                type="text"
+                className="border border-gray-300 rounded p-2"
+                placeholder={`Questions ${index + 1}`}
+              />
+              <button
+                type="button"
+                onClick={() => remove(index)}
+                className="ml-2 bg-red-500 text-white rounded px-2 py-1"
+              >
+                Remove
+              </button>
+            </div>
+            <div>
+              <Options qIndex={index} />
+            </div>
           </div>
         ))}
         <button
