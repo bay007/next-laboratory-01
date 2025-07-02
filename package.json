@@ -24,6 +24,7 @@
     "tailwindcss-animate": "^1.0.7",
     "tailwindcss-animated": "^2.0.0",
     "tw-animate-css": "^1.3.4",
+    "uuid": "^11.1.0",
     "valtio": "^2.1.5"
   },
   "devDependencies": {
