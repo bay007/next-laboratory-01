@@ -52,7 +52,7 @@ function Options({ questionIndex }: { questionIndex: number }) {
         name={`questions.${questionIndex}.correctOption`}
         control={OControl}
         rules={{ required: "Debes seleccionar una opción como correcta" }}
-        render={({ field: controllerField }) => (
+        render={({ field: OField, fieldState }) => (
           <div className="space-y-3">
             {oFields.map((option, optionIndex: number) => (
               <div key={option.fieldId} className="flex items-center gap-3">
@@ -66,11 +66,12 @@ function Options({ questionIndex }: { questionIndex: number }) {
 
                 <input
                   type="radio"
-                  name={`questions.${questionIndex}.correctOptionRadio`}
-                  // Al hacer clic, se actualiza el valor de `correctOption` con el ID de esta opción
-                  onChange={() => controllerField.onChange(option.id)}
-                  // Se marca como seleccionado si el valor del formulario coincide con el ID de esta opción
-                  checked={controllerField.value === option.id}
+                  name={OField.name}
+                  ref={OField.ref}
+                  onChange={() => OField.onChange(option.id)}
+                  onBlur={OField.onBlur}
+                  checked={OField.value === option.id}
+                  disabled={OField.disabled}
                   className="h-5 w-5 cursor-pointer flex-shrink-0"
                 />
 
@@ -93,9 +94,10 @@ function Options({ questionIndex }: { questionIndex: number }) {
                 </Button>
               </div>
             ))}
-            {errors.questions?.[questionIndex]?.options && (
+            {fieldState.error && (
               <p className="text-red-500 text-xs mt-1">
-                Todas las opciones deben tener un texto.
+                {fieldState.error?.message ||
+                  "Todas las opciones deben tener un texto."}
               </p>
             )}
           </div>
@@ -114,12 +116,6 @@ function Options({ questionIndex }: { questionIndex: number }) {
       >
         Añadir Opción
       </Button>
-
-      {errors.questions?.[questionIndex]?.correctOption && (
-        <p className="text-red-500 text-xs mt-2 font-medium">
-          {errors.questions[questionIndex].correctOption.message}
-        </p>
-      )}
     </div>
   );
 }
