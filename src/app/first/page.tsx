@@ -7,19 +7,14 @@ import { useEffect, useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { useSnapshot } from "valtio";
 import Upload from "./input/upload";
-import { Question } from "./question/question";
+import { Questions } from "./question/question";
 import { state } from "./store";
+import { Inputs } from "./types";
 
 type ApiFile = {
   filename: string;
   content: string /* base64 */;
   mimeType: string;
-};
-
-type Inputs = {
-  name: string;
-  email: string;
-  files: { file: File }[]; // Array of files, each with a 'file' property
 };
 
 function base64ToFile(
@@ -66,8 +61,18 @@ export default function App() {
   const snap = useSnapshot(state);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isLoading, setIsLoading] = useState(true);
-  const methods = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => alert(JSON.stringify(data, null, 2));
+  const methods = useForm<Inputs>({
+    defaultValues: {
+      name: "",
+      email: "",
+      files: [],
+      questions: [,],
+    },
+  });
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    alert(JSON.stringify(data, null, 2));
+    console.log(JSON.stringify(data, null, 2));
+  };
 
   useEffect(() => {
     const loadData = async () => {
@@ -130,7 +135,6 @@ export default function App() {
                 />
               </div>
             </div>
-            {/* errors will return when field validation fails  */}
             {methods.formState.errors.name && (
               <span className="text-pink-900">This field is required</span>
             )}
@@ -139,7 +143,7 @@ export default function App() {
             </div>
             <div className="my-1">
               <div>Questions</div>
-              <Question></Question>
+              <Questions></Questions>
             </div>
             <Input className="cursor-pointer" type="submit" />
           </form>
