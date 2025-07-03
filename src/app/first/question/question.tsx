@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Controller, useFieldArray, useFormContext } from "react-hook-form";
 // Asegúrate de instalar la biblioteca: npm install uuid
 import { v4 as uuidv4 } from "uuid";
-import { OptionData, QuestionData } from "../types";
 
 /**
  * Sub-componente interno para gestionar las opciones de una pregunta.
@@ -14,29 +14,29 @@ function Options({ questionIndex }: { questionIndex: number }) {
     control: OControl,
     register: oRegister,
     formState: { errors },
-    getValues,
-    setValue,
+    getValues: oGetValues,
+    setValue: oSetValues,
   } = useFormContext();
 
   const {
     fields: oFields,
     append: oAppend,
     remove: oRemove,
-  } = useFieldArray<OptionData, `questions.${number}.options`, "fieldId">({
+  } = useFieldArray({
     control: OControl,
     name: `questions.${questionIndex}.options`,
-    keyName: "fieldId", // Usamos un nombre de clave personalizado para evitar conflictos con nuestro campo 'id'
+    keyName: "id", // Usamos un nombre de clave personalizado para evitar conflictos con nuestro campo 'id'
   });
 
   // Función mejorada para borrar una opción
-  const handleRemoveOption = (optionIndex: number, optionId: number) => {
+  const handleRemoveOption = (optionIndex: number, optionId: string) => {
     // Revisa si la opción a borrar es la que está marcada como correcta
-    const currentCorrectOption = getValues(
+    const currentCorrectOption = oGetValues(
       `questions.${questionIndex}.correctOption`
     );
     if (currentCorrectOption === optionId) {
       // Si es la correcta, limpia el valor para evitar referencias a un ID inválido
-      setValue(`questions.${questionIndex}.correctOption`, "", {
+      oSetValues(`questions.${questionIndex}.correctOption`, "", {
         shouldValidate: true,
       });
     }
@@ -55,7 +55,7 @@ function Options({ questionIndex }: { questionIndex: number }) {
         render={({ field: OField, fieldState }) => (
           <div className="space-y-3">
             {oFields.map((option, optionIndex: number) => (
-              <div key={option.fieldId} className="flex items-center gap-3">
+              <div key={option.id} className="flex items-center gap-3">
                 {/* 1. REGISTRO DEL ID DE LA OPCIÓN (OCULTO) */}
                 <input
                   type="hidden"
@@ -135,10 +135,10 @@ export function Questions() {
     fields: qFields,
     append: qAppend,
     remove: qRemove,
-  } = useFieldArray<QuestionData, "questions", "fieldId">({
+  } = useFieldArray({
     control,
     name: "questions",
-    keyName: "fieldId", // Usamos un nombre de clave personalizado
+    keyName: "id", // Usamos un nombre de clave personalizado
   });
 
   return (
@@ -147,7 +147,7 @@ export function Questions() {
 
       {qFields.map((qField, qIndex) => (
         <div
-          key={qField.fieldId}
+          key={qField.id}
           className="p-4 border border-gray-200 rounded-lg bg-white shadow-sm"
         >
           {/* 3. REGISTRO DEL ID DE LA PREGUNTA (OCULTO) */}
