@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
@@ -50,6 +51,7 @@ const mockFetchUserData = (): Promise<Inputs> => {
         files: files.map((f) => ({
           file: base64ToFile(f.content, f.filename, f.mimeType),
         })),
+        questions: [],
       };
       console.log("Data fetched!", mockData);
       resolve(mockData);
